@@ -47,11 +47,6 @@ def process(template_image_path, img_rgb, img_gray, color):
                                   thickness=RECTANGLE_THICKNESS)
     return img_rgb
 
-
-def print_hi(name):
-    print(f'Hi, {name}')
-
-
 if __name__ == '__main__':
     list_template = [
         "template/xx.png", "template/bong.png", "template/buom.png",

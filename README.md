@@ -1,6 +1,7 @@
 <h1 style="text-align: center">METHOD EXPLANATION</h1>
 
 # Bài toán: Template Matching
+Github: [https://github.com/TCT2001/dpi_exercise_1](https://github.com/TCT2001/dpi_exercise_1)
 
 ### Đầu vào:
 
@@ -19,6 +20,7 @@
 # Phương pháp
 
 * **Bước 1**: import những thư viện cần thiết
+
 * **Bước 2**: Định nghĩa những hằng số được sử dụng như
     * SCALE_MIN: giá trị scale nhỏ nhất
     * SCALE_MAX: giá trị scale lớn nhất
@@ -36,10 +38,11 @@ img_gray = cv2.cvtColor(img_rgb, cv2.COLOR_BGR2GRAY)
 img_gray = cv2.bilateralFilter(img_gray, 11, 17, 17)
 ```
 
-* **Bước 3**: Duyệt qua từng ảnh mẫu
+* **Bước 4**: Duyệt qua từng ảnh mẫu
     * Với mỗi ảnh mẫu đều đọc và giảm nhiễu cho ảnh mẫu
     * Với mỗi ảnh mẫu, để có độ chính xác cao, ta chạy (process) với nhiều mức scale và nhiều góc độ xoay ảnh khác nhau
       thông qua các hằng số được định nghĩa ở **Bước 2**
+    * Hàm matchTemplate của opencv sẽ là hàm thực hiện matching ảnh gốc với ảnh mẫu
 
 ```python
 # Duyệt qua các ảnh mẫu
@@ -66,8 +69,8 @@ def process(template_image_path, img_rgb, img_gray, color):
             # Lưu lại tọa độ của các vùng matched với ảnh mẫu với độ chính xác lớn hơn hoặc bằng threshold
             loc = np.where(res >= threshold)
 
-            # Từ tạo độ đã lấy được (loc), đánh dấu vùng matched với hình chữ nhật 
-            # có độ dày canh là RECTANGLE_THICKNESS, màu cảnh là color
+            # Với các tạo độ đã lấy được (loc) đánh dấu bằng mỗi vùng tọa độ đó bằng
+            # 1 hình chữ nhật có độ dày canh là RECTANGLE_THICKNESS, và màu là color
             if loc:
                 for pt in zip(
                         *loc[::-1]):
@@ -76,7 +79,7 @@ def process(template_image_path, img_rgb, img_gray, color):
     return img_rgb  # Trả về ảnh gốc được đánh dấu để tiếp túc với những ảnh mẫu tiếp theo
 ```
 
-* **Bước 4**: Lấy, trình bày và lưu lại ảnh img_rgb cuối cùng sau khi tất cả các mẫu được duyệt
+* **Bước 5**: Lấy, trình bày và lưu lại ảnh img_rgb cuối cùng sau khi tất cả các mẫu được duyệt
 
 ```python
 cv2.imwrite('template_matched.jpg', img_rgb)
